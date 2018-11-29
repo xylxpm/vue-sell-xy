@@ -1,7 +1,13 @@
+const webpack = require('webpack')
+const path = require('path')
 const addData = require('./data')
 const seller = addData.seller
 const goods = addData.goods
 const ratings = addData.ratings
+
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
 
 module.exports = {
   css: {
@@ -41,5 +47,16 @@ module.exports = {
         })
       })
     }
-  }
+  },
+  chainWebpack (config) {
+    config.resolve.alias
+      .set('components', resolve('src/components'))
+      .set('common', resolve('src/common'))
+      .set('api', resolve('src/api'))
+
+    config.plugin('context')
+      .use(webpack.ContextReplacementPlugin,
+        [/moment[/\\]locale$/, /zh-cn/])
+  },
+  baseUrl: ''
 }
