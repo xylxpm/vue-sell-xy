@@ -54,6 +54,9 @@
         }
       }
     },
+    mounted() {
+      this.onChange(this.index)
+    },
     computed: {
       selectedLabel: {
         get() {
@@ -69,6 +72,10 @@
     methods: {
       onChange(current) {
         this.index = current
+        const instance = this.$refs.component[current]
+        if (instance && instance.fetch){
+          instance.fetch()
+        }
       },
       onScroll(pos) {
         const tabBarWidth = this.$refs.tabBar.$el.clientWidth
