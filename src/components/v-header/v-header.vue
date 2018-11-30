@@ -1,8 +1,8 @@
 <template>
-  <div class="header">
+  <div class="header" @click="showDetail">
     <div class="content-wrapper">
       <div class="avatar">
-        <img :src="seller.avatar" width="64" height="64"/>
+        <img width="64" height="64" :src="seller.avatar">
       </div>
       <div class="content">
         <div class="title">
@@ -12,23 +12,22 @@
         <div class="description">
           {{seller.description}}/{{seller.deliveryTime}}分钟送达
         </div>
-        <div class="support" v-if="seller.supports">
-          <support-ico :size="1" :type="seller.supports[0].type"></support-ico>
+        <div v-if="seller.supports" class="support">
+          <support-ico :size=1 :type="seller.supports[0].type"></support-ico>
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
-      <div class="support-count"  v-if="seller.supports">
-        <span class="count">{{seller.supports.length}}</span>
+      <div v-if="seller.supports" class="support-count">
+        <span class="count">{{seller.supports.length}}个</span>
         <i class="icon-keyboard_arrow_right"></i>
       </div>
     </div>
     <div class="bulletin-wrapper">
-      <span class="bulletin-title"></span>
-      <span class="bulletin-text">{{seller.bulletin}}</span>
+      <span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
       <i class="icon-keyboard_arrow_right"></i>
     </div>
-    <div class="backgroud">
-      <img :src="seller.avatar" width="100%" height="100%"/>
+    <div class="background">
+      <img :src="seller.avatar" width="100%" height="100%">
     </div>
   </div>
 </template>
@@ -49,12 +48,12 @@
       }
     },
     methods: {
-
+      showDetail() {}
     }
   }
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/mixin"
   @import "~common/stylus/variable"
 
@@ -102,6 +101,7 @@
           .text
             line-height: 12px
             font-size: $fontsize-small-s
+
       .support-count
         position: absolute
         right: 12px
@@ -120,6 +120,7 @@
           margin-left: 2px
           line-height: 24px
           font-size: $fontsize-small-s
+
     .bulletin-wrapper
       position: relative
       display: flex
