@@ -1,31 +1,34 @@
 <template>
   <transition name="fade">
-    <div class="header-detail">
-      <div class="detail-wrapper">
+    <div v-show="visible" class="header-detail" @touchmove.stop.prevent>
+      <div class="detail-wrapper clear-fix">
         <div class="detail-main">
-          <div class="name">{{seller.name}}</div>
+          <h1 class="name">{{seller.name}}</h1>
           <div class="star-wrapper">
-            <star></star>
+            <star :size="48" :score="seller.score"></star>
           </div>
           <div class="title">
             <div class="line"></div>
             <div class="text">优惠信息</div>
             <div class="line"></div>
           </div>
-          <ul class="supports" v-if="seller.supports">
-            <li class="support-item" v-for="(index, item) in seller.supports" :key="item.id">
-              <i class="support-ico"></i>
+          <ul v-if="seller.supports" class="supports">
+            <li class="support-item" v-for="(item,index) in seller.supports" :key="item.id">
               <support-ico :size=2 :type="seller.supports[index].type"></support-ico>
               <span class="text">{{seller.supports[index].description}}</span>
             </li>
           </ul>
-          <div class="title">商家公告</div>
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">商家公告</div>
+            <div class="line"></div>
+          </div>
           <div class="bulletin">
             <p class="content">{{seller.bulletin}}</p>
           </div>
         </div>
       </div>
-      <div class="detail-close">
+      <div class="detail-close" @click="hide">
         <i class="icon-close"></i>
       </div>
     </div>
@@ -36,13 +39,26 @@
   import SupportIco from 'components/support-ico/support-ico'
   import Star from 'components/star/star'
   export default {
-    name: "header-detail",
+    name: 'header-detail',
+    data() {
+      return {
+        visible: false
+      }
+    },
     props: {
       seller: {
         type: Object,
         default() {
           return {}
         }
+      }
+    },
+    methods: {
+      show() {
+        this.visible = true
+      },
+      hide() {
+        this.visible = false
       }
     },
     components: {
@@ -52,10 +68,9 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus" scoped>
+<style lang="stylus" scoped>
   @import "~common/stylus/mixin"
   @import "~common/stylus/variable"
-
   .header-detail
     position: fixed
     z-index: 100
@@ -102,7 +117,6 @@
             padding: 0 12px
             font-weight: 700
             font-size: $fontsize-medium
-
         .supports
           width: 80%
           margin: 0 auto

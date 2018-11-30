@@ -35,7 +35,7 @@
 <script type="text/ecmascript-6">
   import SupportIco from 'components/support-ico/support-ico'
   export default {
-    name: "v-header",
+    name: 'v-header',
     components: {
       SupportIco
     },
@@ -48,7 +48,14 @@
       }
     },
     methods: {
-      showDetail() {}
+      showDetail() {
+        this.headerDetailComp = this.headerDetailComp || this.$createHeaderDetail({
+          $props: {
+            seller: 'seller'
+          }
+        })
+        this.headerDetailComp.show()
+      }
     }
   }
 </script>

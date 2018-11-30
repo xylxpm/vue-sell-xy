@@ -1,6 +1,6 @@
 <template>
   <div class="star" :class="starType">
-    <span class="star-item" v-for="(index, item) in itemClasses" :key="index" :class="itemClass"></span>
+    <span v-for="(itemClass,index) in itemClasses" :class="itemClass" class="star-item" :key="index"></span>
   </div>
 </template>
 
@@ -31,7 +31,7 @@
         for (let i = 0; i < integer; i++) {
           result.push(CLS_ON)
         }
-        if(hasDecimal) {
+        if (hasDecimal) {
           result.push(CLS_HALF)
         }
         while (result.length < LEGHTH) {

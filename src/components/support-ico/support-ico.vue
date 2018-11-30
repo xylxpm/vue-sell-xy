@@ -4,7 +4,7 @@
 
 <script type="text/ecmascript-6">
   export default {
-    name: "support-ico",
+    name: 'support-ico',
     props: {
       size: {
         type: Number
