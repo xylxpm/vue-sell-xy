@@ -42,12 +42,18 @@
 
       </cube-scroll-nav>
     </div>
-    <div class="shop-cart-wrapper">购物车</div>
+    <div class="shop-cart-wrapper">
+      <shop-cart
+        :deliveryPrice="seller.deliveryPrice"
+        :minPrice="seller.minPrice"
+      ></shop-cart>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import { getGoods} from 'api'
+  import ShopCart from 'components/shop-cart/shop-cart'
   export default {
     name: 'goods',
     props: {
@@ -65,6 +71,14 @@
           click:false,
           directionLockThreshold:0
         }
+      }
+    },
+    components:{
+      ShopCart
+    },
+    computed: {
+      seller() {
+        return this.data.seller
       }
     },
     methods: {
