@@ -6,19 +6,23 @@
           <div class="logo" :class="{'highlight':totalCount > 0}">
             <i class="icon-shopping_cart" :class="{'highlight':totalCount > 0}"></i>
           </div>
-          <div class="num" v-show="totalCount > 0"></div>
+          <div class="num" v-show="totalCount > 0">
+            <bubble :num="totalCount"></bubble>
+          </div>
         </div>
         <div class="price" :class="{'highlight':totalPrice > 0}">￥{{totalPrice}}</div>
         <div class="desc">另需配送费{{deliveryPrice}}元</div>
       </div>
-      <div class="content-right" :class="payClass">
-        <div class="pay">{{payDesc}}</div>
+      <div class="content-right">
+        <div class="pay"  :class="payClass">{{payDesc}}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import Bubble from 'components/bubble/bubble'
+
   export default {
     name: 'shop-cart',
     props: {
@@ -37,11 +41,14 @@
         default: 0
       }
     },
+    components:{
+      Bubble
+    },
     computed: {
       totalPrice() {
         let total = 0
         this.selectFoods.forEach((food) => {
-          totle += food.price * food.count
+          total += food.price * food.count
         })
         return total
       },
@@ -76,7 +83,6 @@
 <style lang="stylus" scoped>
   @import "~common/stylus/mixin"
   @import "~common/stylus/variable"
-
   .shopcart
     height: 100%
     .content
@@ -108,20 +114,26 @@
               background: $color-blue
             .icon-shopping_cart
               line-height: 44px
-              font-size: $fontsize-large-xxxx
+              font-size: $fontsize-large-xxx
               color: $color-light-grey
               &.highlight
                 color: $color-white
+          .num
+            position: absolute
+            top: 0
+            right: 0
         .price
           display: inline-block
           vertical-align: top
           margin-top: 12px
-          line-height 24px
+          line-height: 24px
           padding-right: 12px
           box-sizing: border-box
           border-right: 1px solid rgba(255, 255, 255, 0.1)
           font-weight: 700
           font-size: $fontsize-large
+          &.highlight
+            color: $color-white
         .desc
           display: inline-block
           vertical-align: top
@@ -142,5 +154,17 @@
           &.enough
             background: $color-green
             color: $color-white
-
+    .ball-container
+      .ball
+        position: fixed
+        left: 32px
+        bottom: 22px
+        z-index: 200
+        transition: all 0.4s cubic-bezier(0.49, -0.29, 0.75, 0.41)
+        .inner
+          width: 16px
+          height: 16px
+          border-radius: 50%
+          background: $color-blue
+          transition: all 0.4s linear
 </style>
