@@ -1,32 +1,36 @@
 <template>
-  <div class="shopcart">
-    <div class="content" @click="toggleList">
-      <div class="content-left">
-        <div class="logo-wrapper">
-          <div class="logo" :class="{'highlight':totalCount > 0}">
-            <i class="icon-shopping_cart" :class="{'highlight':totalCount > 0}"></i>
+  <div>
+    <div class="shopcart">
+      <div class="content" @click="toggleList">
+        <div class="content-left">
+          <div class="logo-wrapper">
+            <div class="logo" :class="{'highlight':totalCount>0}">
+              <i class="icon-shopping_cart" :class="{'highlight':totalCount>0}"></i>
+            </div>
+            <div class="num" v-show="totalCount>0">
+              <bubble :num="totalCount"></bubble>
+            </div>
           </div>
-          <div class="num" v-show="totalCount > 0">
-            <bubble :num="totalCount"></bubble>
+          <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalPrice}}</div>
+          <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
+        </div>
+        <div class="content-right" >
+          <div class="pay" :class="payClass">
+            {{payDesc}}
           </div>
         </div>
-        <div class="price" :class="{'highlight':totalPrice > 0}">￥{{totalPrice}}</div>
-        <div class="desc">另需配送费{{deliveryPrice}}元</div>
       </div>
-      <div class="content-right">
-        <div class="pay" :class="payClass">{{payDesc}}</div>
-      </div>
-    </div>
-    <div class="ball-container">
-      <div v-for="(ball,index) in balls" :key="index">
-        <transition
-          @before-enter="beforeDrop"
-          @enter="dropping"
-          @after-enter="afterDrop">
-          <div class="ball" v-show="ball.show">
-            <div class="inner inner-hook"></div>
-          </div>
-        </transition>
+      <div class="ball-container">
+        <div v-for="(ball,index) in balls" :key="index">
+          <transition
+            @before-enter="beforeDrop"
+            @enter="dropping"
+            @after-enter="afterDrop">
+            <div class="ball" v-show="ball.show">
+              <div class="inner inner-hook"></div>
+            </div>
+          </transition>
+        </div>
       </div>
     </div>
   </div>
@@ -153,11 +157,11 @@
             selectFoods: 'selectFoods'
           },
           $events: {
-            hide: () => {
-              this.listFold = true
-            },
             leave: () => {
               this._hideShopCartSticky()
+            },
+            hide: () => {
+              this.listFold = true
             }
           }
         })

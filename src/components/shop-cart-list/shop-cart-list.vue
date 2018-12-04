@@ -2,27 +2,34 @@
   <transition name="fade">
     <cube-popup
       :mask-closable=true
+      v-show="visible"
+      @mask-click="maskClick"
       position="bottom"
       type="shop-cart-list"
-      :z-index="90"
-      @mask-click="maskClick"
-      v-show="visible"
+      :z-index=90
     >
-      <transition name="move" @after-leave="afterLeave">
-        <div>
+      <transition
+        name="move"
+        @after-leave="afterLeave"
+      >
+        <div v-show="visible">
           <div class="list-header">
             <h1 class="title">购物车</h1>
             <span class="empty" @click="empty">清空</span>
           </div>
           <cube-scroll class="list-content" ref="listContent">
             <ul>
-              <li class="food" v-for="(food, index) in selectFoods" :key="index">
+              <li
+                class="food"
+                v-for="(food,index) in selectFoods"
+                :key="index"
+              >
                 <span class="name">{{food.name}}</span>
                 <div class="price">
-                  <span>￥{{food.price * food.count}}</span>
+                  <span>￥{{food.price*food.count}}</span>
                 </div>
                 <div class="cart-control-wrapper">
-                  <cart-control :food="food" @add="onAdd"></cart-control>
+                  <cart-control @add="onAdd" :food="food"></cart-control>
                 </div>
               </li>
             </ul>
@@ -35,26 +42,22 @@
 
 <script type="text/ecmascript-6">
   import CartControl from 'components/cart-control/cart-control'
+  import popupMixin from 'common/mixins/popup'
 
   const EVENT_SHOW = 'show'
   const EVENT_ADD = 'add'
   const EVENT_LEAVE = 'leave'
-  const EVENT_HIDE = 'hide'
 
   export default {
     components: { CartControl },
     name: 'shop-cart-list',
+    mixins: [popupMixin],
     props: {
       selectFoods: {
         type: Array,
         default() {
           return []
         }
-      }
-    },
-    data() {
-      return {
-        visible: false
       }
     },
     created() {
@@ -65,14 +68,6 @@
       })
     },
     methods: {
-      hide() {
-        this.visible = false
-        this.$emit(EVENT_HIDE)
-      },
-      show() {
-        this.visible = true
-        this.$emit(EVENT_SHOW)
-      },
       maskClick() {
         this.hide()
       },
@@ -82,8 +77,8 @@
       empty() {
 
       },
-      onAdd(e) {
-        this.$emit(EVENT_ADD, e)
+      onAdd(target) {
+        this.$emit(EVENT_ADD, target)
       }
     }
   }
