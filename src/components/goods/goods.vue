@@ -33,7 +33,7 @@
                   <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="cart-control-wrapper">
-                  <cart-control  :food="food" @add="onAdd"></cart-control>
+                  <cart-control :food="food" @add="onAdd"></cart-control>
                 </div>
               </div>
             </li>
@@ -54,9 +54,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { getGoods} from 'api'
+  import { getGoods } from 'api'
   import ShopCart from 'components/shop-cart/shop-cart'
   import CartControl from 'components/cart-control/cart-control'
+
   export default {
     name: 'goods',
     props: {
@@ -70,13 +71,13 @@
     data() {
       return {
         goods: [],
-        scrollOptions:{
-          click:false,
-          directionLockThreshold:0
+        scrollOptions: {
+          click: false,
+          directionLockThreshold: 0
         }
       }
     },
-    components:{
+    components: {
       ShopCart,
       CartControl
     },
@@ -131,40 +132,57 @@
       top: 0
       left: 0
       bottom: 48px
-    >>> .cube-scroll-nav-bar
-        width: 80px
-        white-space: normal
-        overflow: hidden
-    >>> .cube-scroll-nav-bar-item
-        padding: 0 10px
-        display: flex
-        align-items: center
-        height: 56px
-        line-height: 14px
-        font-size: $fontsize-small
-        background: $color-background-ssss
-        .text
-          flex: 1
-          position: relative
-        .num
-          position: absolute
-          right: -8px
-          top: -10px
-        .support-ico
-          display: inline-block
-          vertical-align: top
-          margin-right: 4px
-    >>> .cube-scroll-nav-bar-item_active
-        background: $color-white
-        color: $color-dark-grey
-    >>> .cube-scroll-nav-panel-title
-        padding-left: 14px
-        height: 26px
-        line-height: 26px
-        border-left: 2px solid $color-col-line
-        font-size: $fontsize-small
-        color: $color-grey
-        background: $color-background-ssss
+
+  >
+  >
+  >
+  .cube-scroll-nav-bar
+    width: 80px
+    white-space: normal
+    overflow: hidden
+
+  >
+  >
+  >
+  .cube-scroll-nav-bar-item
+    padding: 0 10px
+    display: flex
+    align-items: center
+    height: 56px
+    line-height: 14px
+    font-size: $fontsize-small
+    background: $color-background-ssss
+    .text
+      flex: 1
+      position: relative
+    .num
+      position: absolute
+      right: -8px
+      top: -10px
+    .support-ico
+      display: inline-block
+      vertical-align: top
+      margin-right: 4px
+
+  >
+  >
+  >
+  .cube-scroll-nav-bar-item_active
+    background: $color-white
+    color: $color-dark-grey
+
+  >
+  >
+  >
+  .cube-scroll-nav-panel-title
+    padding-left: 14px
+    height: 26px
+    line-height: 26px
+    border-left: 2px solid $color-col-line
+    font-size: $fontsize-small
+    color: $color-grey
+    background: $color-background-ssss
+
   .food-item
     display: flex
     margin: 18px
@@ -211,6 +229,7 @@
       position: absolute
       right: 0
       bottom: 12px
+
   .shop-cart-wrapper
     position: absolute
     left: 0
