@@ -75,7 +75,20 @@
         this.$emit(EVENT_LEAVE)
       },
       empty() {
-
+        this.dialogComp = this.dialogComp || this.$createDialog({
+          type: 'confirm',
+          title: '清空',
+          content: '确认清空？',
+          $events: {
+            confirm: () => {
+              this.selectFoods.forEach((food) => {
+                food.count = 0
+              })
+              this.hide()
+            }
+          }
+        })
+        this.dialogComp.show()
       },
       onAdd(target) {
         this.$emit(EVENT_ADD, target)

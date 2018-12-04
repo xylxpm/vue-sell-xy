@@ -15,7 +15,7 @@
           <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
         </div>
         <div class="content-right" >
-          <div class="pay" :class="payClass">
+          <div class="pay" :class="payClass" @click="pay" >
             {{payDesc}}
           </div>
         </div>
@@ -162,6 +162,9 @@
             },
             hide: () => {
               this.listFold = true
+            },
+            add: (el) => {
+              this.shopCartStickyComp.drop(el)
             }
           }
         })
@@ -173,6 +176,16 @@
       },
       _hideShopCartSticky() {
         this.shopCartStickyComp.hide()
+      },
+      pay(e) {
+        if (this.totalPrice < this.minPrice) {
+          return
+        }
+        this.dialogComp =  this.$createDialog({
+          title: '支付',
+          content: `支付${this.totalPrice}元`
+        }).show()
+        e.stopPropagation()
       }
     },
     computed: {
@@ -205,6 +218,16 @@
           return 'not-enough'
         } else {
           return 'enough'
+        }
+      }
+    },
+    watch: {
+      fold(newVal) {
+        this.listFold = newVal
+      },
+      totalCount(newVal) {
+        if (!this.listFold && !newVal) {
+          this._hideShopCartList()
         }
       }
     }
