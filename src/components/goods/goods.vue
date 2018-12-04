@@ -7,6 +7,28 @@
         v-if="goods.length"
         :options="scrollOptions">
 
+        <template slot="bar" slot-scope="props">
+          <cube-scroll-nav-bar
+            direction="vertical"
+            :labels="props.labels"
+            :txts="barTxts"
+            :current="props.current"
+          >
+            <template slot-scope="props">
+              <div class="text">
+                <support-ico
+                  v-if="props.txt.type>=1"
+                  :size=3
+                  :type="props.txt.type"
+                ></support-ico>
+                <span>{{props.txt.name}}</span>
+                <span class="num" v-if="props.txt.count">
+                  <bubble :num="props.txt.count"></bubble>
+                </span>
+              </div>
+            </template>
+          </cube-scroll-nav-bar>
+        </template>
         <cube-scroll-nav-panel
           v-for="good in goods"
           :key="good.name"
@@ -54,9 +76,11 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { getGoods } from 'api'
+  import {getGoods} from 'api'
   import ShopCart from 'components/shop-cart/shop-cart'
   import CartControl from 'components/cart-control/cart-control'
+  import SupportIco from 'components/support-ico/support-ico'
+  import Bubble from 'components/bubble/bubble'
 
   export default {
     name: 'goods',
@@ -79,7 +103,9 @@
     },
     components: {
       ShopCart,
-      CartControl
+      CartControl,
+      SupportIco,
+      Bubble
     },
     computed: {
       seller() {
@@ -95,9 +121,26 @@
           })
         })
         return ret
+      },
+      barTxts() {
+        let ret = []
+        this.goods.forEach((good) => {
+          const {type, name, foods} = good
+          let count = 0
+          foods.forEach((food) => {
+            count += food.count || 0
+          })
+          ret.push({
+            type,
+            name,
+            count
+          })
+        })
+        return ret
       }
     },
     methods: {
+
       fetch() {
         if (!this.fetched) {
           this.fetched = true
@@ -132,57 +175,40 @@
       top: 0
       left: 0
       bottom: 48px
-
-  >
-  >
-  >
-  .cube-scroll-nav-bar
-    width: 80px
-    white-space: normal
-    overflow: hidden
-
-  >
-  >
-  >
-  .cube-scroll-nav-bar-item
-    padding: 0 10px
-    display: flex
-    align-items: center
-    height: 56px
-    line-height: 14px
-    font-size: $fontsize-small
-    background: $color-background-ssss
-    .text
-      flex: 1
-      position: relative
-    .num
-      position: absolute
-      right: -8px
-      top: -10px
-    .support-ico
-      display: inline-block
-      vertical-align: top
-      margin-right: 4px
-
-  >
-  >
-  >
-  .cube-scroll-nav-bar-item_active
-    background: $color-white
-    color: $color-dark-grey
-
-  >
-  >
-  >
-  .cube-scroll-nav-panel-title
-    padding-left: 14px
-    height: 26px
-    line-height: 26px
-    border-left: 2px solid $color-col-line
-    font-size: $fontsize-small
-    color: $color-grey
-    background: $color-background-ssss
-
+  >>> .cube-scroll-nav-bar
+        width: 80px
+        white-space: normal
+        overflow: hidden
+  >>> .cube-scroll-nav-bar-item
+        padding: 0 10px
+        display: flex
+        align-items: center
+        height: 56px
+        line-height: 14px
+        font-size: $fontsize-small
+        background: $color-background-ssss
+        .text
+          flex: 1
+          position: relative
+        .num
+          position: absolute
+          right: -8px
+          top: -10px
+        .support-ico
+          display: inline-block
+          vertical-align: top
+          margin-right: 4px
+  >>> .cube-scroll-nav-bar-item_active
+        background: $color-white
+        color: $color-dark-grey
+  >>> .cube-scroll-nav-panel-title
+        padding-left: 14px
+        height: 26px
+        line-height: 26px
+        border-left: 2px solid $color-col-line
+        font-size: $fontsize-small
+        color: $color-grey
+        background: $color-background-ssss
   .food-item
     display: flex
     margin: 18px
@@ -229,7 +255,6 @@
       position: absolute
       right: 0
       bottom: 12px
-
   .shop-cart-wrapper
     position: absolute
     left: 0
