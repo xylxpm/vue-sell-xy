@@ -40,6 +40,7 @@
               v-for="food in good.foods"
               :key="food.name"
               class="food-item"
+              @click="selectFood(food)"
             >
               <div class="icon">
                 <img width="57" height="57" :src="food.icon">
@@ -95,6 +96,7 @@
     data() {
       return {
         goods: [],
+        selectedFood: {},
         scrollOptions: {
           click: false,
           directionLockThreshold: 0
@@ -140,7 +142,11 @@
       }
     },
     methods: {
-
+      selectFood(food) {
+        this.selectedFood = food
+        this._showFood()
+        this._showShopCartSticky()
+      },
       fetch() {
         if (!this.fetched) {
           this.fetched = true
@@ -152,11 +158,35 @@
       onAdd(e) {
         this.$refs.shopCart.drop(e)
       },
-      changeHandler(label) {
-        console.log('changed to:', label)
+      _showFood() {
+        this.foodComp = this.foodComp || this.$createFood({
+          $props: {
+            food: 'selectedFood'
+          },
+          $events: {
+            add: (target) => {
+              this.shopCartStickyComp.drop(target)
+            },
+            leave: () => {
+              this._hideShopCartSticky()
+            }
+          }
+        })
+        this.foodComp.show()
       },
-      stickyChangeHandler(current) {
-        console.log('sticky-change', current)
+      _showShopCartSticky() {
+        this.shopCartStickyComp = this.shopCartStickyComp || this.$createShopCartSticky({
+          $props: {
+            selectFoods: 'selectFoods',
+            deliveryPrice: this.seller.deliveryPrice,
+            minPrice: this.seller.minPrice,
+            fold: true
+          }
+        })
+        this.shopCartStickyComp.show()
+      },
+      _hideShopCartSticky() {
+        this.shopCartStickyComp.hide()
       }
     }
   }
