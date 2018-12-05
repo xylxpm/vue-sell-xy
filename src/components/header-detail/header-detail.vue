@@ -38,27 +38,17 @@
 <script type="text/ecmascript-6">
   import SupportIco from 'components/support-ico/support-ico'
   import Star from 'components/star/star'
+  import popupMixin from 'common/mixins/popup'
+
   export default {
     name: 'header-detail',
-    data() {
-      return {
-        visible: false
-      }
-    },
+    mixins: [popupMixin],
     props: {
       seller: {
         type: Object,
         default() {
           return {}
         }
-      }
-    },
-    methods: {
-      show() {
-        this.visible = true
-      },
-      hide() {
-        this.visible = false
       }
     },
     components: {

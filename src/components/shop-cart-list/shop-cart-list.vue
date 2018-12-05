@@ -75,9 +75,8 @@
         this.$emit(EVENT_LEAVE)
       },
       empty() {
-        this.dialogComp = this.dialogComp || this.$createDialog({
+        this.dialogComp =  this.$createDialog({
           type: 'confirm',
-          title: '清空',
           content: '确认清空？',
           $events: {
             confirm: () => {
