@@ -4,7 +4,7 @@
     @after-leave="afterLeave"
   >
     <div class="food" v-show="visible">
-      <cube-scroll ref="scroll">
+      <cube-scroll ref="scroll" :data="computedRatings">
         <div class="food-content">
           <div class="image-header">
             <img :src="food.image">
@@ -45,10 +45,12 @@
               :desc="desc"
               :selectType="selectType"
               :onlyContent="onlyContent"
+              @select="onSelect"
+              @toggle="onToggle"
             ></rating-select>
             <div class="rating-wrapper">
-              <ul v-show="ratings && ratings.length">
-                <li class="rating-item border-bottom-1px" v-for="(rating, index) in ratings" :key="index">
+              <ul v-show="computedRatings && computedRatings.length">
+                <li class="rating-item border-bottom-1px" v-for="(rating, index) in computedRatings" :key="index">
                   <div class="user">
                     <span class="name">{{rating.username}}</span>
                     <img class="avartar" width="12" height="12" :src="rating.avatar"/>
@@ -59,8 +61,8 @@
                   </p>
                 </li>
               </ul>
+              <div class="no-rating"  v-show="!computedRatings || !computedRatings.length">暂无评价</div>
             </div>
-            <!--<div class="no-rating">暂无评价</div>-->
           </div>
         </div>
       </cube-scroll>
@@ -73,6 +75,7 @@
   import CartControl from 'components/cart-control/cart-control'
   import Split from 'components/split/split'
   import popupMixin from 'common/mixins/popup'
+  import ratingMixin from 'common/mixins/rating'
   import RatingSelect from 'components/rating-select/rating-select'
 
   const EVENT_SHOW = 'show'
@@ -80,7 +83,7 @@
   const EVENT_LEAVE = 'leave'
 
   export default {
-    mixins: [popupMixin],
+    mixins: [popupMixin, ratingMixin],
     components: {
       RatingSelect,
       Split,

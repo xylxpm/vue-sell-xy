@@ -5,7 +5,7 @@
       <span @click="select(0)" class="block positive" :class="{'active':selectType===0}">{{desc.positive}}<span class="count">{{positives.length}}</span></span>
       <span @click="select(1)" class="block negative" :class="{'active':selectType===1}">{{desc.negative}}<span class="count">{{negatives.length}}</span></span>
     </div>
-    <div class="swich" @click="toggleContent" :class="{'on':onlyContent}">
+    <div @click="toggleContent" class="switch" :class="{'on':onlyContent}">
       <span class="icon-check_circle"></span>
       <span class="text">只看有内容的评价</span>
     </div>
@@ -70,45 +70,45 @@
     }
   }
 </script>
-
-<style lang="stylus" scoped>
+<style lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   .rating-select
     .rating-type
-      padding:18px 0
-      margin:0 18px
+      padding: 18px 0
+      margin: 0 18px
       .block
-        display :inline-block
-        padding:8px 12px
-        margin-right:8px
-        line-height :16px
-        border-radius :1px
-        font-size:$fontsize-small
-        color:$color-grey
+        display: inline-block
+        padding: 8px 12px
+        margin-right: 8px
+        line-height: 16px
+        border-radius: 1px
+        font-size: $fontsize-small
+        color: $color-grey
         &.active
-          color:$color-white
+          color: $color-white
         .count
-          margin-left :2px
+          margin-left: 2px
         &.positive
-          background :$color-light-blue
+          background: $color-light-blue
           &.active
-            background :$color-blue
+            background: $color-blue
         &.negative
-          background :$color-light-grey-s
+          background: $color-light-grey-s
           &.active
-            background :$color-grey
-
-    .swich
-      display :flex
-      align-items :center
-      padding:12px 18px
-      line-height :24px
-      border-bottom:1px solid $color-row-line
-      color:$color-light-grey
+            background: $color-grey
+    .switch
+      display: flex
+      align-items: center
+      padding: 12px 18px
+      line-height: 24px
+      border-bottom: 1px solid $color-row-line
+      color: $color-light-grey
       &.on
         .icon-check_circle
-          margin-left :4px
-          font-size :$fontsize-large-xxx
-        .text
-          font-size :$fontsize-small
+          color: $color-green
+      .icon-check_circle
+        margin-right: 4px
+        font-size: $fontsize-large-xxx
+      .text
+        font-size: $fontsize-small
 </style>
