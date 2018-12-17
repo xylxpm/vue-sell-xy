@@ -21,7 +21,7 @@
     data() {
       return {
         seller: {
-
+          id: qs.parse(location.search).id
         }
       }
     },
@@ -31,7 +31,9 @@
     },
     methods: {
       _getSeller() {
-        getSeller().then((res) => {
+        getSeller({
+          id: this.seller.id
+        }).then((res) => {
           this.seller = res
         })
       }

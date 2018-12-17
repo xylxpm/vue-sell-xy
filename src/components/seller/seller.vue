@@ -28,7 +28,7 @@
             </div>
           </li>
         </ul>
-        <div class="favorite">
+        <div class="favorite" @click="toggleFavorite">
           <span class="icon-favorite" :class="{'active':favorite}"></span>
           <span class="text">{{favoriteText}}</span>
         </div>
@@ -55,7 +55,7 @@
         <cube-scroll class="pic-wrapper" :options="picScrollOptions">
           <ul class="pic-list">
             <li class="pic-item"
-              v-for="(pic,index) in seller.pics" :key="index"
+                v-for="(pic,index) in seller.pics" :key="index"
             >
               <img width="120" height="90" :src="pic"/>
             </li>
@@ -79,6 +79,9 @@
   import Split from 'components/split/split'
   import Star from 'components/star/star'
   import SupportIco from 'components/support-ico/support-ico'
+  import { save, load } from 'common/js/storage'
+
+  const KEY = 'favorite'
 
   export default {
     name: 'seller',
@@ -108,6 +111,15 @@
           return {}
         }
       }
+    },
+    methods: {
+      toggleFavorite() {
+        this.favorite = !this.favorite
+        save(this.seller.id, KEY, this.favorite)
+      }
+    },
+    created() {
+      this.favorite = load(this.seller.id, KEY, false)
     },
     computed: {
       seller() {
