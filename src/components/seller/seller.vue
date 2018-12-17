@@ -116,7 +116,7 @@
       favoriteText() {
         return this.favorite ? '已收藏' : '收藏'
       }
-    },
+    }
   }
 </script>
 
@@ -242,6 +242,4 @@
         font-size: $fontsize-small
         &:last-child
           border-none()
-
-
 </style>
